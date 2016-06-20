@@ -276,6 +276,14 @@ struct child_cfg_t {
 	bool (*use_proxy_mode)(child_cfg_t *this);
 
 	/**
+	 * Check whether hardware offload should be used for this CHILD_SA.
+	 *
+	 * @return				TRUE, if hardware offload should be used
+	 *						FALSE, otherwise
+	 */
+	bool (*use_hw_offload)(child_cfg_t *this);
+
+	/**
 	 * Check whether IPsec policies should be installed in the kernel.
 	 *
 	 * @return				TRUE, if IPsec kernel policies should be installed
@@ -332,6 +340,8 @@ struct child_cfg_create_t {
 	bool proxy_mode;
 	/** Use IPComp, if peer supports it */
 	bool ipcomp;
+	/** Enable hardware offload, if supported by the IPsec backend */
+	bool hw_offload;
 	/** TFC padding size, 0 to disable, -1 to pad to PMTU */
 	uint32_t tfc;
 	/** Optional manually-set IPsec policy priority */

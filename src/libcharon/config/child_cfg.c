@@ -149,6 +149,11 @@ struct private_child_cfg_t {
 	bool proxy_mode;
 
 	/**
+	 * Enable hardware offload, if supported
+	 */
+	bool hw_offload;
+
+	/**
 	 * enable installation and removal of kernel IPsec policies
 	 */
 	bool install_policy;
@@ -563,6 +568,12 @@ METHOD(child_cfg_t, use_proxy_mode, bool,
 	return this->proxy_mode;
 }
 
+METHOD(child_cfg_t, use_hw_offload, bool,
+	private_child_cfg_t *this)
+{
+	return this->hw_offload;
+}
+
 METHOD(child_cfg_t, install_policy, bool,
 	private_child_cfg_t *this)
 {
@@ -623,6 +634,7 @@ METHOD(child_cfg_t, equals, bool,
 		this->manual_prio == other->manual_prio &&
 		this->replay_window == other->replay_window &&
 		this->proxy_mode == other->proxy_mode &&
+		this->hw_offload == other->hw_offload &&
 		this->install_policy == other->install_policy &&
 		this->fwd_out_policy == other->fwd_out_policy &&
 		streq(this->updown, other->updown) &&
@@ -684,6 +696,7 @@ child_cfg_t *child_cfg_create(char *name, child_cfg_create_t *data)
 			.get_replay_window = _get_replay_window,
 			.set_replay_window = _set_replay_window,
 			.use_proxy_mode = _use_proxy_mode,
+			.use_hw_offload = _use_hw_offload,
 			.install_policy = _install_policy,
 			.install_fwd_out_policy = _install_fwd_out_policy,
 			.equals = _equals,
@@ -704,6 +717,7 @@ child_cfg_t *child_cfg_create(char *name, child_cfg_create_t *data)
 		.lifetime = data->lifetime,
 		.inactivity = data->inactivity,
 		.use_ipcomp = data->ipcomp,
+		.hw_offload = data->hw_offload,
 		.tfc = data->tfc,
 		.manual_prio = data->priority,
 		.interface = strdupnull(data->interface),
