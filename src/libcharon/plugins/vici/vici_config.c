@@ -483,6 +483,7 @@ static void log_child_data(child_data_t *data, char *name)
 	DBG2(DBG_CFG, "   proposals = %#P", data->proposals);
 	DBG2(DBG_CFG, "   local_ts = %#R", data->local_ts);
 	DBG2(DBG_CFG, "   remote_ts = %#R", data->remote_ts);
+	DBG2(DBG_CFG, "   hw_offload = %u", cfg->hw_offload);
 }
 
 /**
@@ -1358,6 +1359,7 @@ CALLBACK(child_kv, bool,
 		{ "tfc_padding",		parse_tfc,			&child->cfg.tfc						},
 		{ "priority",			parse_uint32,		&child->cfg.priority				},
 		{ "interface",			parse_string,		&child->cfg.interface				},
+		{ "hw_offload",			parse_bool,			&child->cfg.hw_offload				},
 	};
 
 	return parse_rules(rules, countof(rules), name, value,
