@@ -98,6 +98,7 @@ static void list_child(private_vici_query_t *this, vici_builder_t *b,
 	b->add_kv(b, "mode", "%N", ipsec_mode_names, child->get_mode(child));
 	if (child->get_state(child) == CHILD_INSTALLED ||
 		child->get_state(child) == CHILD_REKEYING ||
+		child->get_state(child) == CHILD_DELETING ||
 		child->get_state(child) == CHILD_REKEYED)
 	{
 		b->add_kv(b, "protocol", "%N", protocol_id_names,
